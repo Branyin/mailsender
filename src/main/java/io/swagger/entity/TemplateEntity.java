@@ -11,8 +11,10 @@ import javax.persistence.Table;
 public class TemplateEntity {
     @Id
     private String id;
+
     @Column(columnDefinition = "nvarchar(255)")
     private String name;
+
     @Column(columnDefinition = "text")
     private String html;
 
