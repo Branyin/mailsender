@@ -1,0 +1,192 @@
+swagger: "2.0"
+info:
+  description: "This is a Api which use to add and edit template"
+  version: "1.0.0"
+  title: "Swagger templatestore"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "apiteam@swagger.io"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "templatestore.swagger.io"
+basePath: "/v2"
+tags:
+- name: "template"
+  description: "Everything about your templates"
+  externalDocs:
+    description: "Find out more"
+    url: "http://swagger.io"
+schemes:
+- "https"
+- "http"
+paths:
+  /template:
+    post:
+      tags:
+      - "template"
+      summary: "Add a new template"
+      description: ""
+      operationId: "addtemplate"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "template object that needs to be added to the store"
+        required: true
+        schema:
+          $ref: "#/definitions/Template"
+      responses:
+        405:
+          description: "Invalid input"
+      security:
+      - templatestore_auth:
+        - "write:templates"
+        - "read:templates"
+    put:
+      tags:
+      - "template"
+      summary: "Update an existing template"
+      description: ""
+      operationId: "updatetemplate"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "template object that needs to be added to the store"
+        required: true
+        schema:
+          $ref: "#/definitions/Template"
+      responses:
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "template not found"
+        405:
+          description: "Validation exception"
+      security:
+      - templatestore_auth:
+        - "write:templates"
+        - "read:templates"
+        
+  /template/{id}:
+    get:
+      tags:
+      - "template"
+      summary: "Finds templates by status"
+      description: "findById"
+      operationId: "findById"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "find a template by id"
+        type: "integer"
+        format: "int32"
+        required: true
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "object"
+            items:
+              $ref: '#/definitions/ApiResponse'        
+  
+  /template/findByStatus:
+    get:
+      tags:
+      - "template"
+      summary: "Finds templates by status"
+      description: "Multiple status values can be provided with comma separated strings"
+      operationId: "findtemplatesByStatus"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "status"
+        in: "query"
+        description: "Status values that need to be considered for filter"
+        required: true
+        type: "array"
+        items:
+          type: "string"
+          enum:
+          - "available"
+          - "pending"
+          - "sold"
+          default: "available"
+        collectionFormat: "multi"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "object"
+            items:
+              $ref: '#/definitions/ApiResponse'
+        400:
+          description: "Invalid status value"
+      security:
+      - templatestore_auth:
+        - "write:templates"
+        - "read:templates"
+
+securityDefinitions:
+  templatestore_auth:
+    type: "oauth2"
+    authorizationUrl: "localhost:8088/oauth/dialog"
+    flow: "implicit"
+    scopes:
+      write:templates: "modify templates in your account"
+      read:templates: "read your templates"
+  api_key:
+    type: "apiKey"
+    name: "api_key"
+    in: "header"
+definitions:
+  Template:
+    type: "object"
+    required:
+    - "name"
+    - "html"
+    properties:
+      id:
+        type: "string"
+      name:
+        type: "string"
+        example: "doggie"
+      html:
+        type: "string"
+        example: "<html></html>"
+      status:
+        type: "string"
+        description: "template status in the store"
+        enum:
+        - "available"
+        - "disable"
+    xml:
+      name: "template"
+  ApiResponse:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+        format: "int32"
+      type:
+        type: "string"
+      message:
+        type: "string"
+      content:
+        type: "object"
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"
