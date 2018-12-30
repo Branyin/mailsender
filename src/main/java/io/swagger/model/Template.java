@@ -1,6 +1,7 @@
 package io.swagger.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -62,6 +63,16 @@ public class Template   implements Serializable {
 
   @JsonProperty("status")
   private StatusEnum status = null;
+
+
+
+  @JsonProperty("createDate")
+  private Date createDate;
+
+
+  @JsonProperty("lastUpdateDate")
+  private Date lastUpdateDate;
+
 
   public Template id(String id) {
     this.id = id;
@@ -177,6 +188,24 @@ public class Template   implements Serializable {
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("}");
     return sb.toString();
+  }
+
+
+  public Date getCreateDate() {
+    return createDate;
+  }
+
+  public void setCreateDate(Date createDate) {
+    this.createDate = createDate;
+  }
+
+
+  public Date getLastUpdateDate() {
+    return lastUpdateDate;
+  }
+
+  public void setLastUpdateDate(Date lastUpdateDate) {
+    this.lastUpdateDate = lastUpdateDate;
   }
 
   /**
