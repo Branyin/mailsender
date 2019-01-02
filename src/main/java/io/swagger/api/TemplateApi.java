@@ -35,10 +35,10 @@ public interface TemplateApi {
     @ApiResponses(value = { 
         @ApiResponse(code = 405, message = "Invalid input") })
     @RequestMapping(value = "/template",
-        produces = { "application/xml", "application/json" }, 
-        consumes = { "application/json", "application/xml" },
+        produces = {  "application/json" },
+        consumes = { "application/json" },
         method = RequestMethod.POST)
-    ResponseEntity<Void> addtemplate(@ApiParam(value = "template object that needs to be added to the store" ,required=true )  @Valid @RequestBody Template body);
+    ResponseEntity<Object> addtemplate(@ApiParam(value = "template object that needs to be added to the store" ,required=true )  @Valid @RequestBody Template body);
 
 
     @ApiOperation(value = "Finds templates by status", nickname = "findById", notes = "findById", response = Object.class, tags={ "template", })
@@ -76,9 +76,9 @@ public interface TemplateApi {
         @ApiResponse(code = 404, message = "template not found"),
         @ApiResponse(code = 405, message = "Validation exception") })
     @RequestMapping(value = "/template",
-        produces = { "application/xml", "application/json" }, 
-        consumes = { "application/json", "application/xml" },
+        produces = {  "application/json" },
+        consumes = { "application/json"},
         method = RequestMethod.PUT)
-    ResponseEntity<Void> updatetemplate(@ApiParam(value = "template object that needs to be added to the store" ,required=true )  @Valid @RequestBody Template body);
+    ResponseEntity<Object> updatetemplate(@ApiParam(value = "template object that needs to be added to the store" ,required=true )  @Valid @RequestBody Template body);
 
 }

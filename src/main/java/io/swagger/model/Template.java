@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Template   implements Serializable {
 
   @JsonProperty("id")
-  private String id = null;
+  private Integer id = null;
 
   @JsonProperty("name")
   private String name = null;
@@ -66,15 +66,15 @@ public class Template   implements Serializable {
 
 
 
-  @JsonProperty("createDate")
-  private Date createDate;
+  @JsonProperty("createdDate")
+  private Date createdDate;
 
 
-  @JsonProperty("lastUpdateDate")
-  private Date lastUpdateDate;
+  @JsonProperty("lastUpdatedDate")
+  private Date lastUpdatedDate;
 
 
-  public Template id(String id) {
+  public Template id(Integer id) {
     this.id = id;
     return this;
   }
@@ -86,11 +86,11 @@ public class Template   implements Serializable {
   @ApiModelProperty(value = "")
 
 
-  public String getId() {
+  public Integer getId() {
     return id;
   }
 
-  public void setId(String id) {
+  public void setId(Integer id) {
     this.id = id;
   }
 
@@ -191,21 +191,21 @@ public class Template   implements Serializable {
   }
 
 
-  public Date getCreateDate() {
-    return createDate;
+  public Date getcreatedDate() {
+    return createdDate;
   }
 
-  public void setCreateDate(Date createDate) {
-    this.createDate = createDate;
+  public void setcreatedDate(Date createdDate) {
+    this.createdDate = createdDate;
   }
 
 
-  public Date getLastUpdateDate() {
-    return lastUpdateDate;
+  public Date getlastUpdatedDate() {
+    return lastUpdatedDate;
   }
 
-  public void setLastUpdateDate(Date lastUpdateDate) {
-    this.lastUpdateDate = lastUpdateDate;
+  public void setlastUpdatedDate(Date lastUpdatedDate) {
+    this.lastUpdatedDate = lastUpdatedDate;
   }
 
   /**

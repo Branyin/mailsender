@@ -1,24 +1,25 @@
 package io.swagger.entity;
 
 import lombok.Data;
+import net.bytebuddy.dynamic.loading.InjectionClassLoader;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.threeten.bp.LocalDateTime;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Date;
 
-@Table(schema = "email",name = "template")
+@Table(name = "template")
 @Data
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class TemplateEntity {
     @Id
-    private String id;
+    @GeneratedValue(strategy =GenerationType.IDENTITY)
+    private Integer id;
 
     @Column(columnDefinition = "nvarchar(255)")
     private String name;

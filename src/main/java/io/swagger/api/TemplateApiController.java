@@ -3,8 +3,11 @@ package io.swagger.api;
 import io.swagger.model.Template;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
+import io.swagger.service.TemplateService;
+import io.swagger.utils.CommonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -37,23 +40,16 @@ public class TemplateApiController implements TemplateApi {
         this.request = request;
     }
 
-    public ResponseEntity<Void> addtemplate(@ApiParam(value = "template object that needs to be added to the store" ,required=true )  @Valid @RequestBody Template body) {
-        String accept = request.getHeader("Accept");
-        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+    @Autowired
+    private TemplateService templateService;
+
+    public ResponseEntity<Object> addtemplate(@ApiParam(value = "template object that needs to be added to the store" ,required=true )  @Valid @RequestBody Template body) {
+
+        return ResponseEntity.ok(templateService.insert(CommonUtils.convertTemplateToTemplateEntity(body)));
     }
 
     public ResponseEntity<Object> findById(@ApiParam(value = "find a template by id",required=true) @PathVariable("id") Integer id) {
-        String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
-            try {
-                return new ResponseEntity<Object>(objectMapper.readValue("\"{}\"", Object.class), HttpStatus.NOT_IMPLEMENTED);
-            } catch (IOException e) {
-                log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<Object>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-        }
-
-        return new ResponseEntity<Object>(HttpStatus.NOT_IMPLEMENTED);
+        return ResponseEntity.ok(templateService.findById(id));
     }
 
     public ResponseEntity<Object> findtemplatesByStatus(@NotNull @ApiParam(value = "Status values that need to be considered for filter", required = true, allowableValues = "available, pending, sold") @Valid @RequestParam(value = "status", required = true) List<String> status) {
@@ -70,9 +66,8 @@ public class TemplateApiController implements TemplateApi {
         return new ResponseEntity<Object>(HttpStatus.NOT_IMPLEMENTED);
     }
 
-    public ResponseEntity<Void> updatetemplate(@ApiParam(value = "template object that needs to be added to the store" ,required=true )  @Valid @RequestBody Template body) {
-        String accept = request.getHeader("Accept");
-        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+    public ResponseEntity<Object> updatetemplate(@ApiParam(value = "template object that needs to be added to the store" ,required=true )  @Valid @RequestBody Template body) {
+        return ResponseEntity.ok(templateService.update(CommonUtils.convertTemplateToTemplateEntity(body)));
     }
 
 }

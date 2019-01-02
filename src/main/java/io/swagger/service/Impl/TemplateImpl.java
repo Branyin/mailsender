@@ -1,15 +1,12 @@
 package io.swagger.service.Impl;
 
 import io.swagger.entity.TemplateEntity;
-import io.swagger.model.Template;
 import io.swagger.repository.TemplateRepository;
 import io.swagger.service.TemplateService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.List;
-
+@Service
 public class TemplateImpl implements TemplateService {
     @Autowired
     TemplateRepository templateRepository;
